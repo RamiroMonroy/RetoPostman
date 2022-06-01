@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "f63f68c0-5b38-4bd2-8111-8e786c20c9f7",
+		"name": "RickAndMortyAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Mostrar todos los personajes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fc13bbe-f91c-4a92-bf95-834eee3cf7dc",
+						"exec": [
+							"pm.test(\"Busqueda de personaje\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var idJson=jsonData.results.find(x=> x.id==7)\r",
+							"    pm.expect(idJson.name).to.eql(\"Abradolf Lincler\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "8a16f88e-b77a-444e-8efe-4ad421ef6318",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseURL}}/character",
+				"description": "Muestras el listado de todos los personajes de la API"
+			},
+			"response": []
+		},
+		{
+			"name": "Mostrar personaje por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fc13bbe-f91c-4a92-bf95-834eee3cf7dc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Filtrar personaje por ID\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Mr. Always Wants to be Hunted\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "3594e166-9ed7-4628-8f56-a9a4b2e3f73a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseURL}}/character/703",
+				"description": "Filtra y muestra a un personaje por ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Mostrar personajes por ID's que no existen",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fc13bbe-f91c-4a92-bf95-834eee3cf7dc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"El array esta vacio\", function(){\r",
+							"    var jsonData=pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.equals(0);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "dea32f4e-e3db-4fc9-b81f-431bb9e56370",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseURL}}/character/900,901,910",
+				"description": "Filtra un conjunto de personajes por ID que no existen"
+			},
+			"response": []
+		},
+		{
+			"name": "Mostrar todos los personajes por pagina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fc13bbe-f91c-4a92-bf95-834eee3cf7dc",
+						"exec": [
+							"pm.test(\"Busqueda de personaje por pagina\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var idJson=jsonData.results.find(x=> x.id==701)\r",
+							"    pm.expect(idJson.name).to.eql(\"Metal Rick\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "850230ee-c5b8-49f3-a322-d0fd0f6c47da",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/character?page=36",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"character"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "36",
+							"type": "text"
+						}
+					]
+				},
+				"description": "Filtra por pagina y muestra a todos los personajes de esa pagina"
+			},
+			"response": []
+		}
+	]
+}
