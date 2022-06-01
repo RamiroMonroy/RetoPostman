@@ -1,0 +1,1962 @@
+{
+	"info": {
+		"_postman_id": "b3c66de2-1f88-49b6-90c0-4ebeeb3eb1ba",
+		"name": "SimpleBookAPI",
+		"description": "Esta API le permite reservar un libro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Estado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6617316-51f0-4a53-8547-10049cd5c74e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "4c5611a7-bd98-440a-aac3-e1bd45cfc80b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/status",
+						"description": "Devuelve el estado de la API"
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "18e8a705-06a7-4888-bd7d-7963a484cf60",
+			"description": "Prueba de Endpoint /status"
+		},
+		{
+			"name": "Libros",
+			"item": [
+				{
+					"name": "Lista de libros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ff2636a-828d-469d-a4ed-d4c57e3bc0ff",
+								"exec": [
+									"\r",
+									"pm.test(\"Primero de la lista\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==1)\r",
+									"    pm.expect(idJson.name).to.eql(\"The Russian\");\r",
+									"});\r",
+									"pm.test(\"Ultimo de la lista\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==6)\r",
+									"    pm.expect(idJson.name).to.eql(\"Viscount Who Loved Me\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "9c8a76ab-9032-4072-9a09-b3651baf7046",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/books",
+						"description": "Muestra el listado de los libros disponibles"
+					},
+					"response": []
+				},
+				{
+					"name": "Lista de libros limitada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1460f4b2-d28c-4a53-8d90-04321fe6b3a4",
+								"exec": [
+									"pm.test(\"Primero de la lista\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==2)\r",
+									"    pm.expect(idJson.name).to.eql(\"Just as I Am\");\r",
+									"});\r",
+									"pm.test(\"Segundo de la lista\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==5)\r",
+									"    pm.expect(idJson.name).to.eql(\"Untamed\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "f0bbed02-ba7e-44b3-a9f8-3d38e70e6533",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/books?type=non-fiction&limit=2",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "non-fiction",
+									"type": "text"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Muestra el listado de los libros disponibles limitando la cantidad de libros a ver (entre 1 y 20)"
+					},
+					"response": [
+						{
+							"id": "bd211812-79b2-418d-a58d-6b2ac9d954f6",
+							"name": "Lista de libros limitada-Prueba dentro y fuera de rango",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/books?limit=1",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "fiction",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 22:22:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"41-7cqPKxf+uCAKui3Unf2bBEp9Pg0\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"The Russian\",\n        \"type\": \"fiction\",\n        \"available\": true\n    }\n]"
+						},
+						{
+							"id": "32d188be-3596-4431-877a-1a357028b200",
+							"name": "Lista de libros limitada-Prueba con limite superior a 20",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/books?limit=23",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "fiction",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "23"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 22:31:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "81"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"51-HL9+FZz7MF4wK8alGXbx+mNieY8\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Invalid value for query parameter 'limit'. Cannot be greater than 20.\"\n}"
+						},
+						{
+							"id": "dce141a1-9a54-49ab-a44f-c44ddc8e4819",
+							"name": "Lista de libros limitada-Prueba filtrando tipo de pelicula y limitando cantidad de libros",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/books?type=non-fiction&limit=2",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "non-fiction",
+											"type": "text"
+										},
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 22:37:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "135"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"87-fbXCfgu0GEMnqcRoXq5fuhhKazw\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": 2,\n        \"name\": \"Just as I Am\",\n        \"type\": \"non-fiction\",\n        \"available\": false\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Untamed\",\n        \"type\": \"non-fiction\",\n        \"available\": true\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Lista de libros x tipo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71774f74-bdc2-4a25-b65c-a27e465f4580",
+								"exec": [
+									"pm.test(\"Tipo Non-fiction\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==1)\r",
+									"    pm.expect(idJson.type).to.eql(\"fiction\");\r",
+									"});\r",
+									"pm.test(\"Tipo Non-fiction\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==6)\r",
+									"    pm.expect(idJson.type).to.eql(\"fiction\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "1f5a3bae-6453-4297-abf8-dc730688d2f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/books?type=fiction",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "fiction"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Muestra el listado de los libros disponibles filtrandolos por el tipo de genero"
+					},
+					"response": [
+						{
+							"id": "cb385a40-3f79-4793-bb13-6ab74fee0772",
+							"name": "Lista de libros x tipo no existente",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/books?type=drama",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "drama"
+										},
+										{
+											"key": "",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:06:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "91"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"5b-CzvjQGFoAceUOqdIXt2jRXIiDCE\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Invalid value for query parameter 'type'. Must be one of: fiction, non-fiction.\"\n}"
+						},
+						{
+							"id": "53ec71e9-5fd1-4cfa-ac65-a5ee7b5685c1",
+							"name": "Lista de libros x tipo=Non fiction",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/books?type=non-fiction",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "non-fiction"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:21:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "135"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"87-fbXCfgu0GEMnqcRoXq5fuhhKazw\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": 2,\n        \"name\": \"Just as I Am\",\n        \"type\": \"non-fiction\",\n        \"available\": false\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Untamed\",\n        \"type\": \"non-fiction\",\n        \"available\": true\n    }\n]"
+						},
+						{
+							"id": "a67e35f3-280d-4dec-916e-088f04dd0aff",
+							"name": "Lista de libros x tipo= fiction",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/books?type=fiction",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "fiction"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:22:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "283"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"11b-o9uRXcrIVMM6g2P09v+quQbTy2s\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"The Russian\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 3,\n        \"name\": \"The Vanishing Half\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 4,\n        \"name\": \"The Midnight Library\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Viscount Who Loved Me\",\n        \"type\": \"fiction\",\n        \"available\": true\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Filtrar libro x Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d00dcc5b-880b-48e0-ab7f-fdb21ad60d17",
+								"exec": [
+									"pm.test(\"Id encontrado\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Just as I Am\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "8b45d56f-ea2a-4eb2-9294-e40b7a4c0693",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}//books/:bookId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"",
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "2",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Permite filtrar el libro por ID"
+					},
+					"response": [
+						{
+							"id": "07949b74-f985-41d3-9a45-e3dae299d368",
+							"name": "Filtrar libro x Id no existente",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}//books/:bookId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"",
+										"books",
+										":bookId"
+									],
+									"variable": [
+										{
+											"key": "bookId",
+											"value": "28"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:24:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"1e-PW+pRvuxD7BEtM6A2qhc4DpdgOU\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"No book with id 28\"\n}"
+						},
+						{
+							"id": "ffad1c77-85d3-418e-92eb-45b47182333b",
+							"name": "Filtrar libro x Id existente",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}//books/:bookId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"",
+										"books",
+										":bookId"
+									],
+									"variable": [
+										{
+											"key": "bookId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:26:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "125"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"7d-Ckimjt0oK2HpwoZelYONnQZ4+4w\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": 2,\n    \"name\": \"Just as I Am\",\n    \"author\": \"Cicely Tyson\",\n    \"type\": \"non-fiction\",\n    \"price\": 20.33,\n    \"current-stock\": 0,\n    \"available\": false\n}"
+						}
+					]
+				}
+			],
+			"_postman_id": "f772996b-466a-441a-a6f2-3902badad20c",
+			"description": "Pruebas de Endpoint /books"
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Enviar pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f81a04ef-2e90-42a7-8e89-659973bc188f",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Prueba de libros que no existen\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid or missing bookId.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "2bdf7e45-e7fd-489c-a3d7-d6035304cdd5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "20c006ed4cd9e939a4cb1d8c851740609b5fb833af419aa8e7683183c22debb5"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": 35,\r\n  \"customerName\": \"Ramiro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/orders",
+						"description": "Permite enviar un pedido nuevo - Requiere autenticacion"
+					},
+					"response": [
+						{
+							"id": "161908a0-8071-4201-b820-4ae2473d924e",
+							"name": "Enviar pedido-Con Id Existente y Con Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"bookId\": 3,\r\n  \"customerName\": \"Ramiro\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURL}}/orders"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:30:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "50"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"32-q2k6O4RzPova5JnSiAN2K/mGZrw\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"created\": true,\n    \"orderId\": \"PpvXyFjzYUn7KhTReIqK0\"\n}"
+						},
+						{
+							"id": "83a043fd-30af-48d3-8503-b83c71e94d39",
+							"name": "Enviar pedido-Con Id Existente y sin Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"bookId\": 3,\r\n  \"customerName\": \"Ramiro\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURL}}/orders"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:32:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"29-zVtH8ziijw/ex5/btOYG8wWe5dk\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Missing Authorization header.\"\n}"
+						},
+						{
+							"id": "4125f6ac-0da4-497d-bcbf-f8c50097820b",
+							"name": "Enviar pedido-Con Id No Existente y Con Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"bookId\": 35,\r\n  \"customerName\": \"Ramiro\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURL}}/orders"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:34:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "38"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"26-nuV6aQ2H3vYGMuVoIahu/HIFYAI\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Invalid or missing bookId.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Lista de pedidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e6d51c49-c345-4648-8fd4-1052ea869338",
+								"exec": [
+									"pm.test(\"Primer pedido\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==\"7iI2suX9LdFYbAQACQQZa\")\r",
+									"    pm.expect(idJson.bookId).to.eql(1);\r",
+									"});\r",
+									"pm.test(\"Segundo pedido\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var idJson=jsonData.find(x=> x.id==\"PpvXyFjzYUn7KhTReIqK0\")\r",
+									"    pm.expect(idJson.bookId).to.eql(3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "685255d5-ec8b-4f32-ba16-91d0c1421531",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "20c006ed4cd9e939a4cb1d8c851740609b5fb833af419aa8e7683183c22debb5"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/orders",
+						"description": "Permite ver todos los pedidos - Requiere autenticacion"
+					},
+					"response": [
+						{
+							"id": "ead83875-90da-4523-9301-9da32c1d60d1",
+							"name": "Lista de pedidos-Sin Autorizacion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{BaseURL}}/orders"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:36:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"29-zVtH8ziijw/ex5/btOYG8wWe5dk\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Missing Authorization header.\"\n}"
+						},
+						{
+							"id": "365f4fe5-e15f-40bd-9bbc-2798af658754",
+							"name": "Lista de pedidos-Con Autorizacion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{BaseURL}}/orders"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:39:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "369"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"171-+1otdXuViCFLwXVjuOXjBa/o0rU\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": \"7iI2suX9LdFYbAQACQQZa\",\n        \"bookId\": 1,\n        \"customerName\": \"Ramiro\",\n        \"createdBy\": \"9f7b80bf515692016aabcac4d72daa71b741b7ec853cbaf49578df6a149f634f\",\n        \"quantity\": 1,\n        \"timestamp\": 1654039823687\n    },\n    {\n        \"id\": \"PpvXyFjzYUn7KhTReIqK0\",\n        \"bookId\": 3,\n        \"customerName\": \"Ramiro\",\n        \"createdBy\": \"9f7b80bf515692016aabcac4d72daa71b741b7ec853cbaf49578df6a149f634f\",\n        \"quantity\": 1,\n        \"timestamp\": 1654039841452\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Lista de pedidos x Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bf3ed13d-cf55-4876-b4f5-587aea19b617",
+								"exec": [
+									"\r",
+									"pm.test(\"Solicitud sin credenciales\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Missing Authorization header.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "7e178735-d8ed-48b8-a4e2-d8668cb893e8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/orders/:orderId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "7iI2suX9LdFYbAQACQQZa",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "b71cd6b8-af6d-4798-a8ba-0e0e9b761757",
+							"name": "Lista de pedidos x Id Existente-Con Autorizacion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQZa"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:43:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "183"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"b7-T7Rg4VQA6Qk4ihx9NQQ3otjcyUg\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"7iI2suX9LdFYbAQACQQZa\",\n    \"bookId\": 1,\n    \"customerName\": \"Ramiro\",\n    \"createdBy\": \"9f7b80bf515692016aabcac4d72daa71b741b7ec853cbaf49578df6a149f634f\",\n    \"quantity\": 1,\n    \"timestamp\": 1654039823687\n}"
+						},
+						{
+							"id": "a9ff57b5-b002-42eb-8a56-f9e6f8fca4ba",
+							"name": "Lista de pedidos x Id No existente-Con Autorizacion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQty"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:45:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"33-uBoj6+hsHzVGnpmoCKgBbGKAY9c\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"No order with id 7iI2suX9LdFYbAQACQQty.\"\n}"
+						},
+						{
+							"id": "e142d0fa-16d5-40bf-9b30-40969ebd06cf",
+							"name": "Lista de pedidos x Id Existente-Sin Autorizacion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQZa"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:46:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"29-zVtH8ziijw/ex5/btOYG8wWe5dk\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Missing Authorization header.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Actualizar pedidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8b81f42-0892-44f1-9a49-ad67997ddd13",
+								"exec": [
+									"pm.test(\"Id no existente\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"No order with id 7iI2suX9LdFYbAQACQQsd.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "73446392-8c93-411c-8310-7a1ec48e1026",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "20c006ed4cd9e939a4cb1d8c851740609b5fb833af419aa8e7683183c22debb5"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customerName\": \"Ramiro Monroy Ramos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/orders/:orderId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "7iI2suX9LdFYbAQACQQsd",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "0dde5638-288a-4e21-9172-c34450992e9b",
+							"name": "Actualizar pedidos-Id Existente-Con Autorizacion-Sin Body",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQZa"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:53:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "f8c32739-61df-4e1a-90b2-d4115a38b4c2",
+							"name": "Actualizar pedidos-Id Existente-Con Autorizacion-Con Body",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"customerName\": \"Ramiro Monroy Ramos\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQZa"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:54:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "459c66bc-c498-45a1-a9c2-3d1b22228770",
+							"name": "Actualizar pedidos-Id Existente-Sin Autorizacion-Con Body",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"customerName\": \"Ramiro Monroy Ramos\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQZa"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:55:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"29-zVtH8ziijw/ex5/btOYG8wWe5dk\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Missing Authorization header.\"\n}"
+						},
+						{
+							"id": "a5a69f09-080e-46a0-9e05-c0dec46e0b5b",
+							"name": "Actualizar pedidos-Id No Existente-Con Autorizacion-Con Body",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"customerName\": \"Ramiro Monroy Ramos\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQsd"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 31 May 2022 23:57:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"33-VLnMf9EYUgKoRfuxAMV+GqYak+0\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"No order with id 7iI2suX9LdFYbAQACQQsd.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Borrar pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f35228d2-c907-404c-9fcc-9c326d40b49c",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "b2643bee-a36b-44eb-b1af-54bdbd9f9929",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "20c006ed4cd9e939a4cb1d8c851740609b5fb833af419aa8e7683183c22debb5"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/orders/:orderId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "7iI2suX9LdFYbAQACQQZa",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "b4fe550e-85be-4c3d-9eb7-b730e5e9edf5",
+							"name": "Borrar pedido-Id Existente-Sin Autorizacion",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQZa"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 01 Jun 2022 00:00:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"29-zVtH8ziijw/ex5/btOYG8wWe5dk\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Missing Authorization header.\"\n}"
+						},
+						{
+							"id": "e5120c6a-9842-448e-8633-f5911bfd8e64",
+							"name": "Borrar pedido-Id No existente-Con Autorizacion",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQsw"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 01 Jun 2022 00:01:06 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"33-1osFY5RqY4yPGf4Siridmp//ZVA\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"No order with id 7iI2suX9LdFYbAQACQQsw.\"\n}"
+						},
+						{
+							"id": "48a9da37-ed72-477c-bfb7-6f47fc4b22e2",
+							"name": "Borrar pedido-Id Existente-Con Autorizacion",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/orders/:orderId",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "7iI2suX9LdFYbAQACQQZa"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 01 Jun 2022 00:02:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						}
+					]
+				}
+			],
+			"_postman_id": "f694fa92-aa22-493c-ae3f-7157ce0c8cb9",
+			"description": "Prueba de Endpoint /orders"
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Generar token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "375797da-e78b-4513-a878-85f6f20ed75b",
+								"exec": [
+									"pm.test(\"Registro Exitoso\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"accessToken\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "3822f2ad-72d7-4da1-93aa-9cd422d3e167",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"clientName\": \"Postman48\",\r\n   \"clientEmail\": \"valentin48@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/api-clients/",
+						"description": "Registro de cliente en la API para poder enviar o ver un pedido"
+					},
+					"response": [
+						{
+							"id": "f04e9358-f78b-4e63-ba42-9b18eea28f3a",
+							"name": "Generar token-No Exitoso-Credenciales Ya Existen",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"clientName\": \"Postman47\",\r\n   \"clientEmail\": \"valentin47@example.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURL}}/api-clients/"
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 01 Jun 2022 00:08:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"41-rjAEsJfLskSzU5wzBOncJcKHOOY\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"API client already registered. Try a different email.\"\n}"
+						},
+						{
+							"id": "9d877b91-9ede-4f6b-be04-6165d3e17291",
+							"name": "Generar token-No Exitoso-Sin Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURL}}/api-clients/"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 01 Jun 2022 00:10:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2b-l89yYcoVfVJGBAfpD4IpCK5y/wA\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"error\": \"Invalid or missing client name.\"\n}"
+						},
+						{
+							"id": "2398ba7b-c3c6-4856-b0d3-3b75bad5af02",
+							"name": "Generar token-Exitoso-Usuario Registrado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"clientName\": \"Postman48\",\r\n   \"clientEmail\": \"valentin48@example.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURL}}/api-clients/"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 01 Jun 2022 00:11:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "82"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"52-joSbZVYL20S8NubBslC7/SH9Jxo\""
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"accessToken\": \"ff40c528cab9412245e051221de480faab869100c101fad06f58df96d3ed8093\"\n}"
+						}
+					]
+				}
+			],
+			"_postman_id": "9817b883-f6b5-4ab8-b652-ee5f02b25164",
+			"description": "Prueba de Endpoint /api-clients/"
+		}
+	]
+}
